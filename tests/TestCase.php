@@ -10,6 +10,7 @@ use Illuminate\Queue\Queue;
 use Illuminate\Queue\SqsQueue;
 use PHPUnit_Framework_TestCase;
 use Illuminate\Encryption\Encrypter;
+use Illuminate\Support\Str;
 use Illuminate\Queue\Capsule\Manager as Capsule;
 use ShiftOneLabs\LaravelSqsFifoQueue\LaravelSqsFifoQueueServiceProvider;
 
@@ -91,7 +92,7 @@ class TestCase extends PHPUnit_Framework_TestCase
                 define('MCRYPT_MODE_CBC', 'cbc');
             }
 
-            $this->app->instance('encrypter', new Encrypter(str_random(16)));
+            $this->app->instance('encrypter', new Encrypter(Str::random(16)));
         }
     }
 

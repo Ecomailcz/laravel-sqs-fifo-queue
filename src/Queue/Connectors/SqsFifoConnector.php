@@ -4,6 +4,7 @@ namespace ShiftOneLabs\LaravelSqsFifoQueue\Queue\Connectors;
 
 use Aws\Sqs\SqsClient;
 use InvalidArgumentException;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Queue\Connectors\SqsConnector;
 use ShiftOneLabs\LaravelSqsFifoQueue\SqsFifoQueue;
@@ -26,16 +27,16 @@ class SqsFifoConnector extends SqsConnector
         }
 
         if (!empty($config['key']) && !empty($config['secret'])) {
-            $config['credentials'] = array_only($config, ['key', 'secret']);
+            $config['credentials'] = Arr::only($config, ['key', 'secret']);
         }
 
-        $group = array_pull($config, 'group', 'default');
-        $deduplicator = array_pull($config, 'deduplicator', 'unique');
+        $group = Arr::pull($config, 'group', 'default');
+        $deduplicator = Arr::pull($config, 'deduplicator', 'unique');
 
         return new SqsFifoQueue(
             new SqsClient($config),
             $config['queue'],
-            array_get($config, 'prefix', ''),
+            Arr::get($config, 'prefix', ''),
             $group,
             $deduplicator
         );
