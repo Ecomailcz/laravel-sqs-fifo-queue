@@ -4,6 +4,7 @@ namespace ShiftOneLabs\LaravelSqsFifoQueue\Queue\Connectors;
 
 use Aws\Sqs\SqsClient;
 use InvalidArgumentException;
+use Illuminate\Support\Str;
 use Illuminate\Queue\Connectors\SqsConnector;
 use ShiftOneLabs\LaravelSqsFifoQueue\SqsFifoQueue;
 
@@ -20,7 +21,7 @@ class SqsFifoConnector extends SqsConnector
     {
         $config = $this->getDefaultConfiguration($config);
 
-        if (!ends_with($config['queue'], '.fifo')) {
+        if (!Str::endsWith($config['queue'], '.fifo')) {
             throw new InvalidArgumentException('FIFO queue name must end in ".fifo"');
         }
 
